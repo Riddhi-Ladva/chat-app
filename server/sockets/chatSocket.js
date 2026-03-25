@@ -1,17 +1,38 @@
 // ──────────────────────────────────────────────────────────
 // sockets/chatSocket.js — Event Wiring Only (Zero Logic)
 // Owner: SDP_Shrey Choksi
-//
-// TODO (Phase 3 — feature/server-core):
-//   - Import EVENTS from ../../client/js/events.js
-//   - Import chatController
-//   - Wire: JOIN_ROOM    → controller.joinRoom
-//   - Wire: SEND_MESSAGE → controller.sendMessage
-//   - Wire: LEAVE_ROOM   → controller.leaveRoom
-//   - Wire: disconnect   → controller.handleDisconnect
-//   - Catch errors from controller → emit EVENTS.ERROR to socket
-//
 // RULE: No business logic here. Only event binding + error catch.
 // ──────────────────────────────────────────────────────────
 
-// Stub — implement in Phase 3
+const controller = require('../controllers/chatController');
+
+// Note: We use string literals here that match client/js/events.js exactly.
+// The server uses CommonJS (require), client uses ESM (import).
+// Both reference the same string values defined in the PRD §3.
+
+module.exports = (io) => {
+  io.on('connection', (socket) => {
+    console.log(`[CONNECT] socket connected: ${socket.id}`);
+
+    socket.on('join_room', (data) =>
+      controller.joinRoom(socket, io, data)
+        .catch((err) => socket.emit('error', { message: err.message }))
+    );
+
+    socket.on('send_message', (data) =>
+      controller.sendMessage(socket, io, data)
+        .catch((err) => socket.emit('error', { message: err.message }))
+    );
+
+    socket.on('leave_room', (data) =>
+      controller.leaveRoom(socket, io, data)
+        .catch((err) => socket.emit('error', { message: err.message }))
+    );
+
+    socket.on('disconnect', () => {
+      console.log(`[DISCONNECT] socket disconnected: ${socket.id}`);
+      controller.handleDisconnect(socket, io)
+        .catch((err) => console.error('[DISCONNECT ERROR]', err.message));
+    });
+  });
+};
