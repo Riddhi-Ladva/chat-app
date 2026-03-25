@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand: #3b82f6;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+}
+
+body {
+  @apply bg-white text-gray-900 font-sans antialiased;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+#root {
+  @apply h-screen flex flex-col overflow-hidden;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #e5e7eb;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #d1d5db;
+}
