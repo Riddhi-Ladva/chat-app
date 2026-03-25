@@ -9,15 +9,13 @@
 //       Never rename keys without team consensus + PRD update.
 // ──────────────────────────────────────────────────────────
 
-// TODO (Phase 2): Confirm all 8 events match PRD §3 exactly, then remove this comment.
-
 export const EVENTS = {
-  JOIN_ROOM:       'join_room',
-  LEAVE_ROOM:      'leave_room',
-  SEND_MESSAGE:    'send_message',
+  JOIN_ROOM: 'join_room',
+  LEAVE_ROOM: 'leave_room',
+  SEND_MESSAGE: 'send_message',
   RECEIVE_MESSAGE: 'receive_message',
-  ROOM_USERS:      'room_users',
-  USER_JOINED:     'user_joined',
-  USER_LEFT:       'user_left',
-  ERROR:           'error',
+  ROOM_USERS: 'room_users',
+  USER_JOINED: 'user_joined',
+  USER_LEFT: 'user_left',
+  ERROR: 'error',
 };
