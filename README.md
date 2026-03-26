@@ -1,113 +1,76 @@
-# Real-Time Chat Application
+# SecureChat | Advanced Real-Time Messenger
 
-> Node.js • Express • Socket.io • PostgreSQL • Sequelize ORM
-
-## Team
-
-| Role | Developer | Owns |
-|---|---|---|
-| Server Dev | SDP_Shrey Choksi | `server/**` |
-| Client Dev 1 | SDP_Riddhi Ladva | `client/js/events.js`, `socket.js`, `room.js` |
-| Client Dev 2 | SDP_Anuradha Patil | `client/index.html`, `style.css`, `chat.js`, `input.js`, `users.js` |
+> **Modern Stack:** React 18 • Vite 6 • Socket.io • PostgreSQL • Sequelize ORM • Tailwind CSS
 
 ---
 
-## Prerequisites
+## 🏆 Project Team & Contributions
 
-- Node.js v18+
-- PostgreSQL v14+
-- npm v9+
+This project was a collaborative effort between the full-stack team. Below are the specific ownership areas:
+
+### **1. Server Core & Bootstrap**
+**Developer:** `Shrey Choksi`  
+**Focus:** Initial server-side framework and basic socket event wiring.
+*   **Core Logic:** `server/app.js`, `server/sockets/chatSocket.js` (Base setup)
+*   **Infrastructure:** Environment configuration and initial Express routing.
+
+### **2. Full-Stack Features & Advanced Logic**
+**Developers:** `Anuradha Patil` & `Riddhi Ladva`  
+**Focus:** Complete React migration, Database Architecture, Case-Normalization, and Real-Time Experience.
+*   **Frontend (React/Vite):** 
+    *   `client-react/src/App.tsx` (Main layout)
+    *   `client-react/src/context/ChatContext.tsx` (State engine & activity sorting)
+    *   `client-react/src/components/` (Sidebar, ChatWindow, Login, Modals)
+*   **Database & Security (PostgreSQL):**
+    *   `server/models/index.js` (ORM mapping)
+    *   `server/models/RoomMember.js` (Many-to-Many Group Logic)
+    *   `server/controllers/chatController.js` (Ghost Hunter Security, Sorting, Normalized Search)
+*   **Features:** Direct Messaging, Persistent Group Invitations, Real-time Unread Badges (Green pulsing), and the "Most Recent First" sorting engine.
 
 ---
 
-## Setup (Server Dev — Shrey)
+## 🚀 Getting Started
 
+### **1. Server Setup**
 ```bash
-# 1. Clone the repo
-git clone <repo-url>
-cd ChatApplication
-
-# 2. Install server dependencies
 cd server
 npm install
-
-# 3. Configure environment
-cp ../.env.example ../.env
-# Open .env and fill in your PostgreSQL credentials
-
-# 4. Create the database in PostgreSQL
-# (Run this in psql or pgAdmin)
-# CREATE DATABASE chatapp_db;
-
-# 5. Start dev server (auto-restarts on file change)
+# Configure .env with DB_NAME, DB_USER, DB_PASSWORD
 npm run dev
 ```
 
-Server will be available at `http://localhost:3000`
-
----
-
-## Setup (Client Devs — Riddhi & Anuradha)
-
-No build step required. The client uses native ES Modules (`type="module"`).
-
+### **2. Client Setup (React)**
 ```bash
-# After cloning, open client/index.html directly in the browser
-# OR use VS Code Live Server extension for hot reload
-# Make sure the server is running first!
+cd client-react
+npm install
+npm run dev
 ```
+The app will be available at `http://localhost:5173`.
 
 ---
 
-## Git Workflow
-
-```bash
-# Always start from latest main
-git checkout main
-git pull origin main
-
-# Create your feature branch
-git checkout -b feature/<your-branch-name>
-
-# Branch naming convention:
-# feature/server-<name>    ← Server Dev
-# feature/client1-<name>   ← Client Dev 1
-# feature/client2-<name>   ← Client Dev 2
-
-# Push and open a PR — never push directly to main
-git push origin feature/<your-branch-name>
-```
-
-> ⚠️ **events.js must be merged before any other client branch is opened.**
+## 🛡️ Key Features
+*   **Ghost Hunter Security:** Periodic background sync (every 5s) to eject users manually deleted from the database.
+*   **Smart Sorting:** Conversations automatically bubble to the top of the sidebar based on recent activity.
+*   **Sync Invitations:** Users see "Group Invites" instantly without needing to refresh their browser.
+*   **Responsive UI:** Pulsing green notification badges and dynamic browser tab titles.
 
 ---
 
-## Project Structure
-
+## 📂 Project Architecture
 ```
-ChatApplication/
+chat-app/
 ├── server/
-│   ├── package.json
-│   ├── app.js
-│   ├── config/db.js
-│   ├── models/ (User, Room, Message, index)
-│   ├── controllers/chatController.js
-│   └── sockets/chatSocket.js
-├── client/
-│   ├── index.html
-│   ├── style.css
-│   └── js/ (events, socket, room, chat, input, users)
-├── .env.example
-├── .gitignore
+│   ├── controllers/chatController.js   (Core logic by Anuradha/Riddhi)
+│   ├── models/                         (DB Models by Anuradha/Riddhi)
+│   ├── sockets/chatSocket.js           (Event wiring by Shrey/Anuradha)
+│   └── app.js                          (Server Boot by Shrey)
+├── client-react/
+│   ├── src/context/ChatContext.tsx    (State Engine by Anuradha/Riddhi)
+│   ├── src/components/                (UI Components by Anuradha/Riddhi)
+│   └── src/App.tsx
 └── README.md
 ```
 
 ---
-
-## Environment Variables
-
-See `.env.example` for all required keys. Copy to `.env` and fill in values. **Never commit `.env`.**
-
----
-
-*Real-Time Chat Application PRD v1.0 — March 2025*
+*Created with ❤️ by the SecureChat Team — 2026*
