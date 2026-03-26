@@ -1,0 +1,21 @@
+config:
+  target: "http://localhost:3000"
+  phases:
+    - duration: 60
+      arrivalRate: 100
+
+scenarios:
+  - engine: "socketio"
+    flow:
+      - emit:
+          channel: "join_room"
+          data:
+            username: "user{{ $randomNumber }}"
+            room: "test"
+      - think: 2
+      - emit:
+          channel: "send_message"
+          data:
+            username: "user{{ $randomNumber }}"
+            message: "Hello"
+            room: "test"
