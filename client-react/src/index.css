@@ -2,8 +2,29 @@
 
 @theme {
   --color-brand: #3b82f6;
-  --radius-xl: 12px;
-  --radius-2xl: 16px;
+  --color-bg: #ffffff;
+}
+
+/* Custom Scrollbar for a premium look */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #e2e8f0;
+  border-radius: 20px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #cbd5e1;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
 }
 
 body {

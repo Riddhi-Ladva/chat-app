@@ -11,6 +11,19 @@ const controller = require('../controllers/chatController');
 // Both reference the same string values defined in the PRD §3.
 
 module.exports = (io) => {
+  // 🛡️ PERIODIC SECURITY SYNC (Anuradha's Security Task)
+  // Check every 5 seconds if active users still exist in the DB.
+  // This catches manual database wipes and ejects 'ghost' sessions.
+  setInterval(async () => {
+    try {
+      if (io) {
+        await controller.getActiveUsers(null, io);
+      }
+    } catch (err) {
+      console.error('[SECURITY SYNC ERROR]', err.message);
+    }
+  }, 5000);
+
   io.on('connection', (socket) => {
     console.log(`[CONNECT] socket connected: ${socket.id}`);
 
@@ -26,6 +39,26 @@ module.exports = (io) => {
 
     socket.on('leave_room', (data) =>
       controller.leaveRoom(socket, io, data)
+        .catch((err) => socket.emit('error', { message: err.message }))
+    );
+
+    socket.on('get_active_users', () =>
+      controller.getActiveUsers(socket, io)
+        .catch((err) => socket.emit('error', { message: err.message }))
+    );
+
+    socket.on('get_room_messages', (data) =>
+      controller.getRoomMessages(socket, io, data)
+        .catch((err) => socket.emit('error', { message: err.message }))
+    );
+
+    socket.on('get_user_rooms', (data) =>
+      controller.getUserRooms(socket, io, data)
+        .catch((err) => socket.emit('error', { message: err.message }))
+    );
+
+    socket.on('invite_to_room', (data) =>
+      controller.inviteToRoom(socket, io, data)
         .catch((err) => socket.emit('error', { message: err.message }))
     );
 

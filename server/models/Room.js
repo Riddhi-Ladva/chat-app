@@ -18,6 +18,10 @@ const Room = sequelize.define('Room', {
     allowNull: false,
     unique: true,
   },
+  isPrivate: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
 });
 
 module.exports = Room;

@@ -5,15 +5,15 @@
 
 require('dotenv').config({ path: require('path').resolve(__dirname, '../.env') });
 
-const express    = require('express');
-const http       = require('http');
-const cors       = require('cors');
+const express = require('express');
+const http = require('http');
+const cors = require('cors');
 const { Server } = require('socket.io');
 
 const { syncDB } = require('./models/index');
 const chatSocket = require('./sockets/chatSocket');
 
-const app    = express();
+const app = express();
 const server = http.createServer(app);
 
 // ── CORS (Express) ────────────────────────────────────────
@@ -50,3 +50,4 @@ const PORT = process.env.PORT || 3000;
     process.exit(1);
   }
 })();
+module.exports = { app, server, io };
