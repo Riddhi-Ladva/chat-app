@@ -11,14 +11,14 @@ const Message = require('./Message');
 const RoomMember = require('./RoomMember');
 
 // ── Associations (PRD §4.4 + DM Specification Task 1) ─────
-User.hasMany(Message, { foreignKey: 'userId' });
-Room.hasMany(Message, { foreignKey: 'roomId' });
+User.hasMany(Message, { foreignKey: 'userId', onDelete: 'CASCADE' });
+Room.hasMany(Message, { foreignKey: 'roomId', onDelete: 'CASCADE' });
 Message.belongsTo(User, { foreignKey: 'userId' });
 Message.belongsTo(Room, { foreignKey: 'roomId' });
 
 // Many-To-Many for Group Membership
-User.belongsToMany(Room, { through: RoomMember, foreignKey: 'userId' });
-Room.belongsToMany(User, { through: RoomMember, foreignKey: 'roomId' });
+User.belongsToMany(Room, { through: RoomMember, foreignKey: 'userId', onDelete: 'CASCADE' });
+Room.belongsToMany(User, { through: RoomMember, foreignKey: 'roomId', onDelete: 'CASCADE' });
 
 // ── Sync ──────────────────────────────────────────────────
 const syncDB = async () => {

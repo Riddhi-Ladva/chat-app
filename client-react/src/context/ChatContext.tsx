@@ -77,7 +77,7 @@ export const ChatProvider = ({ children }) => {
             }
         });
 
-        // 🚨 SESSION PROTECTION (Anuradha's Security Task) 🚨
+        //  SESSION PROTECTION (Anuradha's Security Task) 
         socket.on('auth_error', (err) => {
             console.warn("[SECURITY] Invalid Session: Logging out...");
             setCurrentUser(null);
@@ -147,6 +147,10 @@ export const ChatProvider = ({ children }) => {
 
         setUnreadCounts(prev => ({ ...prev, [dmRoomName]: 0 }));
         socket.emit('join_room', { username: currentUser, room: dmRoomName });
+
+        // 🔥 CRITICAL: Invite the target user so they join the socket room automatically
+        socket.emit('invite_to_room', { room: dmRoomName, invitedUsers: [name] });
+
         setRooms(prev => {
             if (prev.includes(dmRoomName)) return prev;
             return [...prev, dmRoomName];
