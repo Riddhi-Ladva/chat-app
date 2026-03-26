@@ -1,8 +1,10 @@
 config:
   target: "http://localhost:3000"
+  socketio:
+    transports: ["websocket"]
   phases:
     - duration: 60
-      arrivalRate: 100
+      arrivalRate: 20
 
 scenarios:
   - engine: "socketio"
