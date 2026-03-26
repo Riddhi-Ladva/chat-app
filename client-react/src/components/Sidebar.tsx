@@ -34,18 +34,12 @@ const Sidebar = () => {
                 </h2>
             </header>
 
-            {/* Scrollable Area - Anuradha's Requirement for Scroll Bar */}
             <div className="flex-1 overflow-y-auto custom-scrollbar px-2 space-y-6 pb-20">
-
-                {/* Rooms Section - New Groups logic */}
+                {/* Rooms Section */}
                 <div>
                     <div className="flex items-center justify-between mb-2 pl-2 pr-2">
                         <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider underline-offset-4">Rooms</h3>
-                        <button
-                            onClick={handleCreateRoom}
-                            className="text-gray-400 hover:text-blue-600 transition-colors p-1"
-                            title="Create New Group"
-                        >
+                        <button onClick={handleCreateRoom} className="text-gray-400 hover:text-blue-600 transition-colors p-1">
                             <PlusSquare size={18} />
                         </button>
                     </div>
@@ -55,8 +49,7 @@ const Sidebar = () => {
                             <div
                                 key={room}
                                 onClick={() => setActiveRoom(room)}
-                                className={`flex items-center justify-between p-3 rounded-xl cursor-pointer transition-all duration-200 ${activeRoom === room ? 'bg-blue-100 text-blue-700 font-semibold shadow-sm' : 'hover:bg-gray-100 text-gray-600'
-                                    }`}
+                                className={`flex items-center justify-between p-3 rounded-xl cursor-pointer transition-all duration-200 ${activeRoom === room ? 'bg-blue-100 text-blue-700 font-semibold shadow-sm' : 'hover:bg-gray-100 text-gray-600'}`}
                             >
                                 <div className="flex items-center gap-3">
                                     <MessageSquare size={16} strokeWidth={2.5} />
@@ -72,7 +65,7 @@ const Sidebar = () => {
                     </div>
                 </div>
 
-                {/* Direct Messages Section - Anuradha's Task #1 & #2 */}
+                {/* Direct Messages Section */}
                 <div>
                     <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 pl-2">Direct Messages</h3>
                     <div id="dm-users-list" className="space-y-1">
@@ -88,8 +81,7 @@ const Sidebar = () => {
                                 <div
                                     key={user}
                                     onClick={() => startDM(user)}
-                                    className={`flex items-center justify-between p-3 rounded-xl cursor-pointer transition-all duration-200 group ${isActive ? 'bg-blue-100 text-blue-700 font-semibold shadow-sm' : 'hover:bg-gray-100 text-gray-600'
-                                        }`}
+                                    className={`flex items-center justify-between p-3 rounded-xl cursor-pointer transition-all duration-200 group ${isActive ? 'bg-blue-100 text-blue-700 font-semibold shadow-sm' : 'hover:bg-gray-100 text-gray-600'}`}
                                 >
                                     <div className="flex items-center gap-3">
                                         <div className="relative">
@@ -100,8 +92,6 @@ const Sidebar = () => {
                                         </div>
                                         <span className="text-sm font-medium">{user}</span>
                                     </div>
-
-                                    {/* Unread Badge - Anuradha's Task #3 */}
                                     {unreadCount > 0 && !isActive && (
                                         <span className="bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full animate-pulse shadow-lg">
                                             {unreadCount}

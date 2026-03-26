@@ -1,6 +1,5 @@
 // ──────────────────────────────────────────────────────────
 // controllers/chatController.js — All Business Logic
-// Owner: SDP_Shrey Choksi
 // ──────────────────────────────────────────────────────────
 
 const { User, Room, Message, RoomMember } = require('../models/index');
@@ -25,6 +24,7 @@ const broadcastGlobalUsers = async (io) => {
     }
   });
 
+  // Unique, lowercase, and sorted alphabetically
   const dbUsernames = new Set(users.map(u => u.username.toLowerCase()));
   const onlineUsernames = [...dbUsernames].sort();
 
@@ -68,7 +68,7 @@ const joinRoom = async (socket, io, data) => {
   await broadcastGlobalUsers(io);
 };
 
-// ... (leaveRoom as it was) ...
+// ── 2. leaveRoom ─────────────────────────────────────────
 const leaveRoom = async (socket, io, data) => {
   const { room } = data;
   if (!room) return;
@@ -195,5 +195,5 @@ module.exports = {
   getRoomMessages,
   getUserRooms,
   inviteToRoom,
-  broadcastGlobalUsers // Exported for use in socket periodic sync
+  broadcastGlobalUsers
 };
