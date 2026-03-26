@@ -8,4 +8,7 @@ export default defineConfig({
         react(),
         tailwindcss(),
     ],
+    css: {
+        postcss: {} // override inherited postCSS configs
+    }
 })

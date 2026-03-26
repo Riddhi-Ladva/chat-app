@@ -14,6 +14,21 @@ module.exports = (io) => {
   io.on('connection', (socket) => {
     console.log(`[CONNECT] socket connected: ${socket.id}`);
 
+    socket.on('login', (data) =>
+      controller.loginUser(socket, io, data)
+        .catch((err) => socket.emit('error', { message: err.message }))
+    );
+
+    socket.on('create_group', (data) =>
+      controller.createGroup(socket, io, data)
+        .catch((err) => socket.emit('error', { message: err.message }))
+    );
+
+    socket.on('add_to_group', (data) =>
+      controller.addToGroup(socket, io, data)
+        .catch((err) => socket.emit('error', { message: err.message }))
+    );
+
     socket.on('join_room', (data) =>
       controller.joinRoom(socket, io, data)
         .catch((err) => socket.emit('error', { message: err.message }))
@@ -26,6 +41,11 @@ module.exports = (io) => {
 
     socket.on('leave_room', (data) =>
       controller.leaveRoom(socket, io, data)
+        .catch((err) => socket.emit('error', { message: err.message }))
+    );
+
+    socket.on('get_messages', (data) =>
+      controller.getMessages(socket, io, data)
         .catch((err) => socket.emit('error', { message: err.message }))
     );
 

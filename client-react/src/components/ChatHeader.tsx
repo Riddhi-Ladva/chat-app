@@ -4,7 +4,15 @@ import { useChat } from '../context/ChatContext';
 import { MessageSquare, User, MoreHorizontal, MessageCircle } from 'lucide-react';
 
 const ChatHeader = () => {
-    const { activeRoom, currentUser } = useChat();
+    const { activeRoom, currentUser, roomUsers, addToGroup } = useChat();
+
+    const handleAddUsers = () => {
+        const memberStr = window.prompt(`Enter comma-separated usernames to add to ${formatRoomName(activeRoom)}:`);
+        if (memberStr) {
+            const invitees = memberStr.split(',').map(m => m.trim()).filter(Boolean);
+            addToGroup(activeRoom, invitees);
+        }
+    };
 
     // Helper to format room display name
     const formatRoomName = (room) => {
@@ -30,16 +38,17 @@ const ChatHeader = () => {
                         {isDM ? `${roomName}` : `# ${roomName}`}
                     </h2>
                     <div className="text-xs text-green-500 font-medium flex items-center gap-1.5">
-                        <div className="w-2 h-2 bg-green-500 rounded-full"></div> Online
+                        <div className="w-2 h-2 bg-green-500 rounded-full"></div> 
+                        {roomUsers[activeRoom] ? roomUsers[activeRoom].length : 0} Online
                     </div>
                 </div>
             </div>
 
             <div className="flex items-center gap-2">
-                <button className="p-2 hover:bg-gray-100 rounded-full text-gray-500 transition-colors">
+                <button onClick={handleAddUsers} title="Add Users to Group" className="p-2 hover:bg-gray-100 rounded-full text-gray-500 transition-colors">
                     <User size={20} />
                 </button>
-                <button className="p-2 hover:bg-gray-100 rounded-full text-gray-500 transition-colors">
+                <button onClick={() => alert('Room Settings modal coming soon!')} title="Settings" className="p-2 hover:bg-gray-100 rounded-full text-gray-500 transition-colors">
                     <MoreHorizontal size={20} />
                 </button>
             </div>

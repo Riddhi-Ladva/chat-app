@@ -15,6 +15,10 @@ Room.hasMany(Message,   { foreignKey: 'roomId' });
 Message.belongsTo(User, { foreignKey: 'userId' });
 Message.belongsTo(Room, { foreignKey: 'roomId' });
 
+// Enhanced Many-to-Many logic for PM requirements
+User.belongsToMany(Room, { through: 'UserRooms' });
+Room.belongsToMany(User, { through: 'UserRooms' });
+
 // ── Sync ──────────────────────────────────────────────────
 // alter:true updates existing tables without dropping data (safe for dev)
 const syncDB = async () => {

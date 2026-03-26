@@ -4,7 +4,8 @@ import { useChat } from '../context/ChatContext';
 import { Send, Hash, UserCircle } from 'lucide-react';
 
 const ChatWindow = () => {
-    const { messages, currentUser } = useChat();
+    const { messages, currentUser, sendMessage } = useChat();
+    const [inputText, setInputText] = React.useState('');
     const scrollRef = useRef(null);
 
     // Auto-scroll to bottom
@@ -13,6 +14,13 @@ const ChatWindow = () => {
             scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         }
     }, [messages]);
+
+    const handleSend = () => {
+        if (inputText.trim()) {
+            sendMessage(inputText);
+            setInputText('');
+        }
+    };
 
     return (
         <main className="flex-1 flex flex-col bg-slate-50 relative overflow-hidden">
@@ -65,10 +73,16 @@ const ChatWindow = () => {
             <div className="h-24 px-10 border-t bg-white flex items-center gap-4 shrink-0 shadow-sm">
                 <div className="flex-1 bg-gray-50 border border-gray-100 rounded-2xl h-14 flex items-center px-4 gap-3 focus-within:border-blue-300 focus-within:ring-4 focus-within:ring-blue-100 transition-all">
                     <input
+                        value={inputText}
+                        onChange={(e) => setInputText(e.target.value)}
+                        onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                         className="flex-1 bg-transparent border-none outline-none text-sm text-gray-700 placeholder:text-gray-400"
                         placeholder="Type a secure message..."
                     />
-                    <button className="w-10 h-10 bg-indigo-600 text-white rounded-xl flex items-center justify-center hover:bg-indigo-700 transition-colors shadow-sm">
+                    <button 
+                        onClick={handleSend}
+                        className="w-10 h-10 bg-indigo-600 text-white rounded-xl flex items-center justify-center hover:bg-indigo-700 transition-colors shadow-sm"
+                    >
                         <Send size={18} />
                     </button>
                 </div>

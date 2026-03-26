@@ -6,12 +6,16 @@ import { User, MessageSquare, ShieldCheck, PlusSquare } from 'lucide-react';
 const Sidebar = () => {
     const { onlineUsers, activeRoom, startDM, unreadCounts, currentUser, rooms, createRoom, setActiveRoom } = useChat();
 
-    // Mock Data for Demo (Anuradha can remove this later)
-    const demoUsers = onlineUsers.length > 0 ? onlineUsers : ['Shrey', 'Riddhi', 'Rahul'];
+    // Use active data from Socket
+    const visibleUsers = onlineUsers;
 
     const handleCreateRoom = () => {
         const name = window.prompt("Enter new group name:");
-        if (name) createRoom(name.toLowerCase().replace(/\s+/g, '-'));
+        if (name) {
+            const memberStr = window.prompt("Enter comma-separated usernames to invite (leave blank for just you):") || '';
+            const invitees = memberStr.split(',').map(m => m.trim()).filter(Boolean);
+            createRoom(name.toLowerCase().replace(/\s+/g, '-'), invitees);
+        }
     };
 
     return (
@@ -61,7 +65,7 @@ const Sidebar = () => {
             <div className="flex-1">
                 <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 pl-2">Direct Messages</h3>
                 <div id="dm-users-list" className="space-y-1">
-                    {demoUsers.map((user) => {
+                    {visibleUsers.map((user) => {
                         const sortedArray = [currentUser, user].sort();
                         const roomName = `dm_${sortedArray[0]}_${sortedArray[1]}`;
                         const isActive = activeRoom === roomName;
